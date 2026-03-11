@@ -34,8 +34,8 @@ extern unsigned int						blRdmTxFramePrepared;
 extern unsigned int						blRdmPresentLED;
 extern int								blFlashFramesTotal;
 extern int								blFlashFrameActual;
-extern unsigned int						blFlashSectorActual;
-extern unsigned int						blFlashSectorsTotal;
+extern int								blFlashSectorActual;
+extern int								blFlashSectorsTotal;
 extern unsigned int						blCircularCounter;
 extern unsigned int						blFlashingInProgressCtc;
 

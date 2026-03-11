@@ -15,8 +15,8 @@ unsigned int					blRdmTxFramePrepared;
 unsigned int					blRdmPresentLED;
 int								blFlashFramesTotal;
 int								blFlashFrameActual;
-unsigned int					blFlashSectorActual;
-unsigned int					blFlashSectorsTotal;
+int								blFlashSectorActual;
+int								blFlashSectorsTotal;
 unsigned int					blCircularCounter;
 unsigned int					blFlashingInProgressCtc;
 

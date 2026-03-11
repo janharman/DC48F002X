@@ -637,7 +637,7 @@ void bl_Write_Number_To_Pos(int num, int posx, int posy, int digits)
 
 const unsigned char blHexConstChar[18] = {"0123456789ABCDEF"};
 
-#define BL_DISP_ITEMS_CNT					2
+#define BL_DISP_ITEMS_CNT					4
 #define BL_SCREEN_SAVER_CTC_RELOAD			100000
 
 int					dispItemMirrorVal[BL_DISP_ITEMS_CNT];
@@ -675,8 +675,11 @@ void _bl_bootloader_background(void)
 	row += 10;
 	bl_Show_String("Dt:", 0, row, 3);
 	bl_Show_String(FLASH_FirmwareInfo.DtTxt, 10, row, 6);
-//	bl_Show_String("/", 4, 96, 1);
-//	bl_Show_String("ID:", 6, 0, 3);
+
+	bl_Show_String("Frames", 46, 24, 6);
+	bl_Show_String("Sectors", 43, 44, 7);
+	bl_Show_String("/", 51, 34, 1);
+	bl_Show_String("/", 51, 54, 1);
 
 //	char c[4];
 //	c[0] = '.';
@@ -768,8 +771,10 @@ typedef struct
 
 const tBlDispItem	blDispItem[BL_DISP_ITEMS_CNT] =
 {
-		{1,		&blFlashFrameActual,			48,		34,		3},
-		{1,		&blFlashFramesTotal,			48,		44,		3},
+		{1,		&blFlashFrameActual,			42,		34,		3},
+		{1,		&blFlashFramesTotal,			55,		34,		3},
+		{1,		&blFlashSectorActual,			42,		54,		3},
+		{1,		&blFlashSectorsTotal,			55,		54,		3},
 };
 
 void _bl_refresh_display_item(int idx)
