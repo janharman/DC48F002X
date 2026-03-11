@@ -95,16 +95,14 @@ void Reset_UART1_For_ReceivingDMX(void)
 	GPIOA->MODER &= ~GPIO_MODER_MODE9;
 	GPIOA->MODER |= GPIO_MODER_MODE9_1;	// Alternate Function
 	USART1->CR1 = 	0;
-	USART1->CR1 = 	USART_CR1_M0;			// 9 Data Bits
-	USART1->CR2 = 	USART_CR2_RTOEN;		// 1 Stop Bits, RECEIVER TIMEOUT ENABLED
+	USART1->CR1 = 	0;					// 8 Data Bits
+	USART1->CR2 = 	0;					// 1 Stop Bits, RECEIVER TIMEOUT DISABLED
 	USART1->CR3 =	USART_CR3_EIE;
 	USART1->RTOR = 30;						// Number of bits after received last char
 	USART1->BRR = USART1_BRR_FOR_250000BD;
-	USART1->CR1 = (	USART_CR1_M0 |		// 9 Data Bits
-					USART_CR1_UE |		// USART ENABLE
+	USART1->CR1 = (	USART_CR1_UE |		// USART ENABLE
 					USART_CR1_RE | 		// RECEIVER ENABLE
 					USART_CR1_RXNEIE |	// RECEIVER INTERRUPT ENABLE
-					USART_CR1_RTOIE |		// RECEIVER TIMEOUT INTERRUPT ENABLE
 				    0);
 }
 
@@ -229,34 +227,8 @@ void USART1_IRQHandler(void)
 	unsigned int ds = USART1->RDR;
 	unsigned int d = ds & 0xff;
 	unsigned int frameErr = USART1->ISR & USART_ISR_FE;
-	unsigned int rtoi = USART1->ISR & USART_ISR_RTOF;
 	USART1->ICR = USART_ICR_ORECF | USART_ICR_FECF | USART_ICR_NECF | USART_ICR_RTOCF;
-
-	if (rtoi)	// RECEIVER TIMEOUT INTERRUPT
-	{
-		if (!DmxXLR_ReceivedChrCnt) return;	// Interrupt after Break is supressed!
-		if (*DMX_XLR_RecBuffer == E120_SC_RDM)
-		{
-			DmxRS485_RDM_DataToProcess = DmxXLR_ReceivedChrCnt;
-			DmxXLR_LastReceivedChans = 0;
-			return;
-		}
-		if (DmxXLR_LastReceivedChans == DmxXLR_ReceivedChrCnt)
-		{
-			if (!DmxXLR_PrevRecStartCode && !DMX_XLR_RecBuffer[0])
-			{
-				DMX_XLR_Data_Process = 1;
-				DMX_XLR_NumOfRecChans = DmxXLR_ReceivedChrCnt;
-			}
-		}
-		DmxXLR_LastReceivedChans = DmxXLR_ReceivedChrCnt;
-		DmxXLR_PrevRecStartCode = DMX_XLR_RecBuffer[0];
-		DmxXLR_ReceivedChrCnt = 0;
-		DmxXLR_RecStatus = DS_BREAK_IS_AWAITING;
-		return;
-	}
-
-	if (frameErr || !(ds & 0x100))
+	if (frameErr)
 		DmxXLR_RecStatus = DS_BREAK_IS_AWAITING;
 
 	if (DmxXLR_RecStatus == DS_RECEIVING_DATA_FRAME)
@@ -265,6 +237,8 @@ void USART1_IRQHandler(void)
 			if (DmxXLR_ReceivedChrCnt < REC_DMX_BUFFER_SIZE)
 			{
 					DMX_XLR_RecBuffer[DmxXLR_ReceivedChrCnt++] = d;
+					if (*DMX_XLR_RecBuffer == E120_SC_RDM)
+						DmxRS485_RDM_DataToProcess = DmxXLR_ReceivedChrCnt;
 			}
 			else
 			{
@@ -272,14 +246,21 @@ void USART1_IRQHandler(void)
 					DMX_XLR_RecBuffer[0] = 0xFF;						// discard whole frame
 			}
 	}
-	else
+	else if (frameErr && !ds) // --> means BREAK was received
 	{
-			if (frameErr && !ds) // --> means BREAK was received
+			DmxXLR_CheckingLine++;
+			DmxXLR_RecStatus = DS_RECEIVING_DATA_FRAME;
+			if (DmxXLR_LastReceivedChans == DmxXLR_ReceivedChrCnt)
 			{
-					DmxXLR_CheckingLine++;
-					DmxXLR_RecStatus = DS_RECEIVING_DATA_FRAME;
-					DmxXLR_ReceivedChrCnt = 0;
+				if (!DmxXLR_PrevRecStartCode && !DMX_XLR_RecBuffer[0])
+				{
+					DMX_XLR_Data_Process = 1;
+					DMX_XLR_NumOfRecChans = DmxXLR_ReceivedChrCnt;
+				}
 			}
+			DmxXLR_LastReceivedChans = DmxXLR_ReceivedChrCnt;
+			DmxXLR_PrevRecStartCode = DMX_XLR_RecBuffer[0];
+			DmxXLR_ReceivedChrCnt = 0;
 	}
 }
 

@@ -8,13 +8,13 @@
 #ifndef INC_DC48_GLOBALS_H_
 #define INC_DC48_GLOBALS_H_
 
-#define FIRMWARE_VERSION_HEX			0x0000
-#define FIRMWARE_VERSION				"F000"
+#define FIRMWARE_VERSION_HEX			0x0001
+#define FIRMWARE_VERSION				"F001"
 //#define APPLICATION_FW_VERSION			FIRMWARE_VERSION
-#define FIRMWARE_DATE					0x260212
-#define FIRMWARE_DATE_TXT				"260212"
+#define FIRMWARE_DATE					0x260310
+#define FIRMWARE_DATE_TXT				"260310"
 
-#define CONFIGURATION_STRING			"CT48"
+#define CONFIGURATION_STRING			"CD48"
 
 #define HARDWARE_VERSION_H00A
 
@@ -242,6 +242,7 @@ extern TUnitSettings			UnitSettings;						// RAM Unit Settings
 extern unsigned int				WorkHours10min;
 extern TDimmerSetup				DimmerSetup[NUM_OF_CHANNELS];
 /* FLASH ***********************************************************************************/
+extern const TDimmerSetup		DefaultDimmerSetup;
 extern const unsigned int		FLASH_Patch[NUM_OF_CHANNELS];		// Individual Patch
 extern const TUnitSettings		FLASH_UnitSettings;					// FLASH Unit Settings
 extern const unsigned int		FLASH_WorkHours10min;

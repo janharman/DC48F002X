@@ -81,13 +81,16 @@ TUnitSettings				UnitSettings;						// RAM Unit Settings
 unsigned int				WorkHours10min;
 TDimmerSetup				DimmerSetup[NUM_OF_CHANNELS];
 /* FLASH ***********************************************************************************/
+
+const TDimmerSetup			DefaultDimmerSetup = DIMM_DEFAULT_SETUP;
+
 __FLASH_SET_PATCH
 const unsigned int			FLASH_Patch[NUM_OF_CHANNELS] =		// Individual Patch
-							{100, 2, 3, 40, 15, 16, 77, 158, 9, 10, 11, 12, 13, 512, 511, 16, 17, 18, 19, 20, 21, 22, 23, 10,
+							{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
 							25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48};
 __FLASH_SET_UNIT
 const TUnitSettings			FLASH_UnitSettings = {				// FLASH Unit Settings
-		/* WorklightEn */		1,
+		/* WorklightEn */		0,
 		/* HoldLast */			1,
 		/* DisplayOffTime */	10,
 		/* ManualControl */		0,
@@ -95,16 +98,16 @@ const TUnitSettings			FLASH_UnitSettings = {				// FLASH Unit Settings
 		/* ManualChannels */	{0},
 		/* DiaLevel */			{50},
 		/* sACN_Enabled */		0,
-		/* ArtNet_Enabled */	1,
+		/* ArtNet_Enabled */	0,
 };
 const unsigned int			FLASH_WorkHours10min;
 __FLASH_SET_DIMMERS
 const TDimmerSetup			FLASH_DimmerSetup[NUM_OF_CHANNELS] = {
 		DIMM_DEFAULT_SETUP,
-		{DIMM_CURVE_OFF, 10, 800, 1, 2, 1, 0},
 		DIMM_DEFAULT_SETUP,
-		{DIMM_CURVE_ALW_ON, 10, 800, 1, 1, 0, 0},
-		{DIMM_CURVE_NODIMM, 15, 821, 1, 1, 0, 0},
+		DIMM_DEFAULT_SETUP,
+		DIMM_DEFAULT_SETUP,
+		DIMM_DEFAULT_SETUP,
 		DIMM_DEFAULT_SETUP,
 		DIMM_DEFAULT_SETUP,
 		DIMM_DEFAULT_SETUP,

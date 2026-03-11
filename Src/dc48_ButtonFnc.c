@@ -150,6 +150,13 @@ void SaveSetupToFLASH(const TDisplayButtonsFnc * dbf)
 			}
 			memory = WRITE_TO_FLASH__DIMMERS_SETTS;
 			break;
+	case DISP_NR_POPUP_FACTORY_SETTINGS:
+			for (i=0; i<NUM_OF_CHANNELS; i++)
+			{
+				DimmerSetup[i] = DefaultDimmerSetup;
+			}
+			memory = WRITE_TO_FLASH__DIMMERS_SETTS;
+			break;
 	case DISP_NR_1_ADVANCED_DIMMER_SETUP:
 			if (DimmerSetupDimmerIndex == NUM_OF_CHANNELS) // ALL DIMMERS
 			{
@@ -305,10 +312,8 @@ void Evaluate_Buttons_Actions(void)
 						Actual_Screen_Number = dbf->Up & 0xff;
 				break;
 		case BTN_UP_WRITE_FACTORY_SETTS:
-/*
-				Initiate_FlashWritingProcess(WRITE_TO_FLASH_CODE__FACTR);
+				SaveSetupToFLASH(dbf);
 				Actual_Screen_Number = dbf->Enter;
-*/
 				break;
 		}
 	}

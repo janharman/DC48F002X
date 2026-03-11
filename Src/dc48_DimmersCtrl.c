@@ -341,6 +341,7 @@ void _DmxPlusCtrlDimmers(void)
 		*dim++ = (float)dv / 255.0f;
 		xlr++;
 		eth++;
+		setup++;
 	}
 }
 
