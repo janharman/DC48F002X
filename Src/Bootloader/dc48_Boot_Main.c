@@ -53,8 +53,6 @@ void BL_Reset_Handler_Main(void)
 	if (!gotobl)	// if go to bootloader is not forced -> do standart starting procedure with CRC checking
 	{
 			CountCrc = bl_CountPrgCrc();
-			LED_DEBUG_BLUE_OFF;
-			LED_DEBUG_RED_ON;
 			if (BootLdrFwCrc.CrcAssigned == PROGRAM_CRC_STS_ASSIGNED)
 			{
 				if (CountCrc == BootLdrFwCrc.Crc)

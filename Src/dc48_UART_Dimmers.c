@@ -162,7 +162,7 @@ void UART5_IRQHandler(void)
 	UART5->RDR;
 	if (UART5->ISR & USART_ISR_RTOF)
 	{
-		LED_DEBUG_BLUE_TGL;
+		LED_DEBUG_RED_TGL;
 		if (comdim->RxCnt == RX_RESPONSE_LENGTH)
 		{
 			comdim->RxFrameReceived = comdim->RxCnt;
@@ -240,7 +240,7 @@ void UART4_IRQHandler(void)
 	UART4->RDR;
 	if (UART4->ISR & USART_ISR_RTOF)
 	{
-		LED_DEBUG_BLUE_TGL;
+		LED_DEBUG_RED_TGL;
 		if (comdim->RxCnt == RX_RESPONSE_LENGTH)
 		{
 			comdim->RxFrameReceived = comdim->RxCnt;
