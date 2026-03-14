@@ -9,7 +9,7 @@
 #include "dc48_Globals.h"
 #include "dc48_Ethernet.h"
 #include "dc48_RdmDef.h"
-//#include "dc12_CRMX.h"
+#include <dc48_Boot_Glob.h>
 
 #define BUTTON_ESCAPE_ICON	.FixNum=0
 #define BUTTON_DOWN_ICON	.FixNum=1
@@ -228,8 +228,12 @@ const TDisplayItemStruct DisplayFixedBackgroundItems[DISP_IDX_BKGD_LAST_EMPTY_PO
 	{FDIT_STRING,		HARDWARE_VERSION,						0,		52,		12,		0, 		0},
 	{FDIT_STRING,		"Firmware:",							0,		0,		22,		0, 		0},
 	{FDIT_STRING,		FIRMWARE_VERSION,						0,		52,		22,		0, 		0},
-	{FDIT_STRING,		"Serial Nr:",							0,		0,		32,		0, 		0},
-	{DIT_NORMAL_NUMBER,	(int*)&FLASH_RdmSetup.DeviceSerialNr,	0,		52,		32,		4, 		0},
+	{FDIT_STRING,		"Fw Date:",								0,		0,		32,		8, 		0},
+	{FDIT_STRING,		FIRMWARE_DATE_TXT,						0,		46,		32,		0, 		0},
+	{FDIT_STRING,		"Serial Nr:",							0,		0,		42,		0, 		0},
+	{DIT_NORMAL_NUMBER,	(int*)&FLASH_RdmSetup.DeviceSerialNr,	0,		52,		42,		4, 		0},
+	{FDIT_STRING,		"Bootloader Ver:",						0,		0,		52,		15,		0},
+	{DIT_NORMAL_NUMBER,	(int*)&BootLdrVer.Version,	.Num=DNW_MSK+0xFFFF,52,		52,		4, 		0},
 //--------------------------------------------------------------------------------------------
 // 19 SERVICE - PLUGIN MODULES	(CRMX 1/2) - NEPOUZITO!!!!!!!!!!!!!!!!!						pData		x		y		w 		h
 //--------------------------------------------------------------------------------------------

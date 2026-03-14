@@ -21,7 +21,6 @@ int							DisplayExtTemperature;				// Temperature External
 unsigned int				Display_fan_output;
 unsigned int				Display_fan_tacho;
 int							DisplayFanTemperature;				// Temperature Mcu or Ext for fan ctrl
-int							SavingToFlashActive;
 /* ETHERNET *********************************************************************************/
 //unsigned int				Eth_IpAddressToSave;				// Changed IP address by user via display
 /* CHANNELS *********************************************************************************/

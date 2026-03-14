@@ -585,8 +585,8 @@ void Execute_GET_Command_Class(unsigned char * d, int msg_type)
 			break;
 	case SWS__(DC4_PID_GET__HW_FW_INFO):
 			RDM_Packet.ParameterDataLength = 8*4;
-			RDM_Packet.DataI[0] = 888; //DC5_BOOTLOADER_VERSION;
-			RDM_Packet.DataI[1] = 888; //DC5_BOOTLOADER_DATE;
+			RDM_Packet.DataI[0] = BootLdrVer.Version;
+			RDM_Packet.DataI[1] = BootLdrVer.Date;
 			memcpy(&RDM_Packet.DataI[2], &FLASH_FirmwareInfo, 24);
 			break;
 	default:

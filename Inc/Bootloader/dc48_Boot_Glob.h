@@ -1,5 +1,5 @@
 /*
- * dc5_Boot_Glob.h
+ * dc48_Boot_Glob.h
  *
  *  Created on: 28.4.2025
  *      Author: harman jan
@@ -8,10 +8,10 @@
 #ifndef BOOTLOADER_DC5_BOOT_GLOB_H_
 #define BOOTLOADER_DC5_BOOT_GLOB_H_
 
-#define	DC48_BOOTLOADER_VERSION			0x000B0009
-#define DC48_BOOTLOADER_DATE			0x00260310
-#define DC48_BOOTLOADER_VER_TXT			"B0009"
-#define DC48_BOOTLOADER_DATE_TXT		"260310"
+#define	DC48_BOOTLOADER_VERSION			0x000B000A
+#define DC48_BOOTLOADER_DATE			0x00260314
+#define DC48_BOOTLOADER_VER_TXT			"B0010"
+#define DC48_BOOTLOADER_DATE_TXT		"260314"
 #define DC48_BOOTLOADER_ID_VER			0x80000000		// Identifikuje ze odpovida bootloader
 
 #define BOOT_RX_BUFFER_SIZE				520

@@ -11,10 +11,10 @@
 #define FIRMWARE_VERSION_HEX			0x0001
 #define FIRMWARE_VERSION				"F001"
 //#define APPLICATION_FW_VERSION			FIRMWARE_VERSION
-#define FIRMWARE_DATE					0x260310
-#define FIRMWARE_DATE_TXT				"260310"
+#define FIRMWARE_DATE					0x260314
+#define FIRMWARE_DATE_TXT				"260314"
 
-#define CONFIGURATION_STRING			"CD02T"
+#define CONFIGURATION_STRING			"CD02A"
 
 #define HARDWARE_VERSION_H00A
 
@@ -182,7 +182,6 @@ extern int						DisplayExtTemperature;				// Temperature External
 extern unsigned int				Display_fan_output;
 extern unsigned int				Display_fan_tacho;
 extern int						DisplayFanTemperature;				// Temperature Mcu or Ext for fan ctrl
-extern int						SavingToFlashActive;
 /* ETHERNET *********************************************************************************/
 //extern unsigned int				Eth_IpAddressToSave;				// Changed IP address by user via display
 /* CHANNELS *********************************************************************************/

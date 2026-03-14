@@ -23,7 +23,7 @@ unsigned int					blFlashingInProgressCtc;
 __attribute__((section(".flash_BootVer"))) const tBootLdrVersion BootLdrVer = {
 	/* Version			*/	DC48_BOOTLOADER_VERSION,
 	/* Date				*/	DC48_BOOTLOADER_DATE,
-	/* Text				*/	"DC5-Bootloader " DC48_BOOTLOADER_VER_TXT "-" DC48_BOOTLOADER_DATE_TXT
+	/* Text				*/	"DC48-Bootloader " DC48_BOOTLOADER_VER_TXT "-" DC48_BOOTLOADER_DATE_TXT
 };
 
 __attribute__((section(".flash_PrgCrc"))) volatile const tBootLdrFwCrc BootLdrFwCrc = {

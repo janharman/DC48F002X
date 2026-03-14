@@ -129,10 +129,16 @@ void _bl_Check_FW_Data_and_write(char * c)
 	unsigned int adr = d[1];
 	if (adr < BOOT_FW_START_ADDRESS) return;
 	if (adr > BOOT_FW_FW_ADR_LAST_ADDRESS) return;	// jen formalita, neni uplne dobre
-	blFlashFrameActual = c[8];
-	blFlashFramesTotal = c[9];
-	blFlashSectorActual = c[10];
-	blFlashSectorsTotal = c[11];
+	if ((c[9] & 0x80) && (c[11] & 0x80))
+	{
+		blFlashFramesTotal = c[8] + ((c[9] & 0x7F) << 8);
+		blFlashSectorsTotal = c[10];
+	}
+	else
+	{
+		blFlashFrameActual = c[8] + (c[9] << 8);
+		blFlashSectorActual = c[10];
+	}
 
 	unsigned int crc = 0;
 	for (int i=0; i<=BOOT_PROTOCOL_END; i++)
@@ -142,8 +148,8 @@ void _bl_Check_FW_Data_and_write(char * c)
 	if (crc != *d) return;
 	RDM_Packet.DataI[0] = adr;
 	d = (unsigned int *)c;
-	int cnt = 13;
-	if ((adr & 0x7FF) >= 1872) cnt = 11;
+	int cnt = 13;					// cnt is number of 16 bytes blocks -> where 13 * 16 = 208 Bytes
+	if ((adr & 0x7FF) >= 1872) cnt = 11;	// 11 * 16 = 176 Bytes
 	bl_Flash_Write_to_Flash(adr, &d[3], cnt);
 }
 

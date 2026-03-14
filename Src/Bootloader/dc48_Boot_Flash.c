@@ -42,11 +42,8 @@ int sector_erased;
 
 void bl_Flash_Write_to_Flash(unsigned int addr, unsigned int * d, int cnt)
 {
-	SavingToFlashActive = 1;
-
 	// Check proper address
 	if (addr > BOOT_FW_FW_ADR_LAST_ADDRESS) return;
-	int base = addr & (FLASH_SECTOR_SIZE-1);
 	int sector = (addr >> 13) & 0x07F;	// shift by 8k due to 8k sector size
 	if (sector >= 0x1F) return;	// sectors 32 and more are from Bank 1 => it is not allowed to write to bank in which bootloader resides
 
@@ -65,6 +62,7 @@ void bl_Flash_Write_to_Flash(unsigned int addr, unsigned int * d, int cnt)
 
 	// erase desired flash sector if writing is on zero base 0x0000
 	// sector_erased != sector it means that this sector is writen for the first time -> so we have to erase sector
+	unsigned int base = addr & (FLASH_SECTOR_SIZE-1);
 	if ((base == 0) || (sector_erased != sector))
 	{
 		sector_erased = sector;
@@ -79,15 +77,20 @@ void bl_Flash_Write_to_Flash(unsigned int addr, unsigned int * d, int cnt)
 	unsigned int * a = (unsigned int *)addr;
 	while (cnt--)
 	{
-		*(__IO uint32_t*)a++ = *d++;
-		*(__IO uint32_t*)a++ = *d++;
-		*(__IO uint32_t*)a++ = *d++;
-		*(__IO uint32_t*)a++ = *d++;
-		if (!bl_Flash_Operation_Success()) return;
+		if ((d[0] != 0xFFFFFFFF) || (d[1] != 0xFFFFFFFF) || (d[2] != 0xFFFFFFFF) || (d[3] != 0xFFFFFFFF))
+		{
+			*(__IO uint32_t*)a++ = *d++;
+			*(__IO uint32_t*)a++ = *d++;
+			*(__IO uint32_t*)a++ = *d++;
+			*(__IO uint32_t*)a++ = *d++;
+			if (!bl_Flash_Operation_Success()) return;
+		}
+		else
+		{
+			a += 4;
+			d += 4;
+		}
 	}
 	FLASH->NSCR = FLASH_CR_LOCK;
-	SavingToFlashActive = 0;
 }
-
-
 

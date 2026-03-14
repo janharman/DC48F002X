@@ -676,8 +676,8 @@ void _bl_bootloader_background(void)
 	bl_Show_String("Dt:", 0, row, 3);
 	bl_Show_String(FLASH_FirmwareInfo.DtTxt, 10, row, 6);
 
-	bl_Show_String("Frames", 46, 24, 6);
-	bl_Show_String("Sectors", 43, 44, 7);
+	bl_Show_String("Blocks:", 43, 24, 7);
+	bl_Show_String("Sectors:", 40, 44, 8);
 	bl_Show_String("/", 51, 34, 1);
 	bl_Show_String("/", 51, 54, 1);
 
@@ -771,9 +771,9 @@ typedef struct
 
 const tBlDispItem	blDispItem[BL_DISP_ITEMS_CNT] =
 {
-		{1,		&blFlashFrameActual,			42,		34,		3},
+		{1,		&blFlashFrameActual,			41,		34,		3},
 		{1,		&blFlashFramesTotal,			55,		34,		3},
-		{1,		&blFlashSectorActual,			42,		54,		3},
+		{1,		&blFlashSectorActual,			41,		54,		3},
 		{1,		&blFlashSectorsTotal,			55,		54,		3},
 };
 
@@ -821,7 +821,8 @@ void bl_DisplayRefresh(void)
 		}
 		blScreenSaverMod--;
 		if (!blScreenSaverMod) blScreenSaverMod = 1000;
-		if (blCommActive)
+		int btns = ~GPIOB->IDR & 0x407;
+		if (blCommActive || btns)
 		{
 			blCommActive = 0;
 			blScreenSaverCtc = BL_SCREEN_SAVER_CTC_RELOAD;
